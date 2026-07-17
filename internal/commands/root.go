@@ -4,9 +4,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var pauseCmd = &cobra.Command{
-	Use: "pause",
-	Short: "pause current music",
+var rootCmd = &cobra.Command{
+	Use: "rxemu",
+	Short: "music player",
 	RunE: func(cmd *cobra.Command, args []string) error{
 		if err := cmd.Help(); err != nil{
 			return err
@@ -15,6 +15,7 @@ var pauseCmd = &cobra.Command{
 	},
 }
 
-func init(){
-	rootCmd.AddCommand(pauseCmd)
+func Execute() error {
+	err := rootCmd.Execute()
+	return err
 }
