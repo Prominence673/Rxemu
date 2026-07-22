@@ -5,9 +5,14 @@ services:
       dockerfile: Dockerfile.dev
 
     container_name: music-cli-dev
+    user: "1000:1000"
+
+    environment:
+      PULSE_SERVER: unix:/mnt/wslg/PulseServer
 
     volumes:
       - .:/app
+      - /mnt/wslg:/mnt/wslg
 
     working_dir: /app
 
