@@ -27,7 +27,11 @@ var pauseCmd = &cobra.Command{
 	Short: "pause current music",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		res := pause()
-		fmt.Println(res)
+		if res.OK{
+			fmt.Println(res.Message)
+		}else{
+			fmt.Println(res.Error)
+		}
 		return nil
 	},
 }
