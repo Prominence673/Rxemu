@@ -6,23 +6,10 @@ import (
 	"github.com/Prominence673/rxemu/internal/ipc"
 	"github.com/spf13/cobra"
 	"strconv"
-	"time"
+	"github.com/Prominence673/rxemu/internal/commands/helper"
 )
 
 var limit int
-
-func FormatDuration(seconds float64) string {
-	duration := time.Duration(seconds) * time.Second
-
-	minutes := int(duration.Minutes())
-	remainingSeconds := int(duration.Seconds()) % 60
-
-	return fmt.Sprintf(
-		"%02d:%02d",
-		minutes,
-		remainingSeconds,
-	)
-}
 
 func search(args []string) ipc.Response{
 	args = append(args, strconv.Itoa(limit))
@@ -59,7 +46,7 @@ var searchCmd = &cobra.Command{
 				ID: i + 1,
 				Title: t.Title,
 				Artist: t.Artist,
-				Duration: FormatDuration(t.Duration),
+				Duration: helper.FormatDuration(t.Duration),
 			})
 		}
 		for _, t := range view{
