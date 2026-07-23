@@ -29,7 +29,7 @@ func play(arg string, url bool) ipc.Response {
 var playCmd = &cobra.Command{
 	Use:   "play <id>",
 	Short: "play current music",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var res ipc.Response
 		if v,_ := cmd.Flags().GetBool("url"); v{
