@@ -57,6 +57,16 @@ func (d *Daemon) Handle(req ipc.Request) ipc.Response {
 		return d.pause()
 	case "search":
 		return d.search(req)
+	case "vol-up":
+		return d.volUp()
+	case "vol-down":
+		return d.volDown()
+	case "vol-set":
+		return d.volSet(req)
+	case "seek":
+		return d.seek(req)
+	case "seek-abs":
+		return d.seekAbs(req)
 	default:
 		return ipc.Response{OK: false, Message: "Invalid command"}
 	}
