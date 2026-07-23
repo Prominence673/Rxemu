@@ -4,8 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
-
-	"github.com/Prominence673/rxemu/internal/commands"
+	"github.com/Prominence673/rxemu/internal/commands/helper"
 	"github.com/Prominence673/rxemu/internal/ipc"
 )
 
@@ -44,7 +43,7 @@ func (d *Daemon) play(req ipc.Request) ipc.Response{
 	}
 	d.state.Status = statePlaying
 	d.CurrentTrack = &d.LastTrack[id-1]
-	min := commands.FormatDuration(d.CurrentTrack.Duration)
+	min := helper.FormatDuration(d.CurrentTrack.Duration)
 	return ipc.Response{
 		OK:      true,
 		Message: fmt.Sprintf("Playing ▶︎ %s - %s - %s", d.CurrentTrack.Title, d.CurrentTrack.Artist, min),
@@ -79,7 +78,7 @@ func (d *Daemon) playURL(req ipc.Request) ipc.Response {
 
     d.CurrentTrack = &track
     d.state.Status = statePlaying
-    min := commands.FormatDuration(d.CurrentTrack.Duration)
+    min := helper.FormatDuration(d.CurrentTrack.Duration)
     return ipc.Response{
         OK:      true,
         Message: fmt.Sprintf("Playing ▶︎ %s - %s - %s", d.CurrentTrack.Title, d.CurrentTrack.Artist, min),
