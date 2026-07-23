@@ -25,6 +25,7 @@ func pause() ipc.Response {
 var pauseCmd = &cobra.Command{
 	Use:   "pause",
 	Short: "pause current music",
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		res := pause()
 		if res.OK{
