@@ -13,12 +13,21 @@ RUN groupadd --gid ${GROUP_ID} developer \
 
 WORKDIR /app
 
-RUN apt update && apt install -y \
+RUN apt-get update && apt-get install -y \
     git \
     curl \
     vim \
     mpv \
-    pulseaudio-utils
+    pulseaudio-utils \
+    unzip
+
+RUN curl -L \
+    https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux \
+    -o /usr/local/bin/yt-dlp \
+    && chmod a+rx /usr/local/bin/yt-dlp
+
+RUN curl -fsSL https://deno.land/install.sh \
+    | DENO_INSTALL=/usr/local sh
 
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
 
