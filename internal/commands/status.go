@@ -24,6 +24,7 @@ func status() ipc.Response {
 var statusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "music status",
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		res := status()
 		if res.OK{
