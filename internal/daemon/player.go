@@ -12,6 +12,7 @@ import (
 type Player struct {
 	command    *exec.Cmd
 	socketPath string
+	events chan MPVEvent
 }
 
 type MPVRequest struct {
@@ -24,6 +25,12 @@ type MPVResponse struct {
 	Data  any    `json:"data,omitempty"`
 }
 
+type MPVEvent struct{
+	Event  string  `json:"event"`
+	Reason string `json:"error"`
+	Error  any    `json:"data,omitempty"`
+}
+
 func NewPlayer(socketPath string) *Player {
 	cmd := exec.Command(
 		"mpv",
@@ -32,7 +39,7 @@ func NewPlayer(socketPath string) *Player {
 		"--no-config",
 		"--input-ipc-server="+socketPath,
 	)
-	return &Player{command: cmd, socketPath: socketPath}
+	return &Player{command: cmd, socketPath: socketPath, events: make(chan MPVEvent, 16)}
 }
 
 func (p *Player) Start() error {
@@ -160,4 +167,31 @@ func (p *Player) Close() error {
 		return nil
 	}
 	return nil
+}
+
+func (p *Player) Events() <-chan MPVEvent{
+	return p.events
+}
+
+func (p *Player) ListenEvents() error{
+	conn, err := net.Dial("unix", p.socketPath)
+	if err != nil{
+		return fmt.Errorf("connect to mpv events: %w", err)
+	}
+	defer conn.Close()
+
+	decoder := json.NewDecoder(conn)
+
+	for{
+		var MPVEvent MPVEvent
+
+		if err := decoder.Decode(&MPVEvent); err != nil{
+			return fmt.Errorf("decode mpv event:%w", err)
+		}
+
+		if MPVEvent.Event == ""{
+			continue;
+		}
+		p.events <- MPVEvent
+	}
 }
