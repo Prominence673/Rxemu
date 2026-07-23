@@ -38,13 +38,13 @@ flowchart TD
     User[User] --> CLI[music CLI]
     CLI --> Commands[internal/commands]
     Commands --> IPCClient[IPC client]
-    IPCClient --> Socket[/tmp/rxemu.sock]
+    IPCClient --> Socket["/tmp/rxemu.sock"]
     Socket --> IPCServer[IPC server]
     IPCServer --> Daemon[musicd daemon]
     Daemon --> Source[YouTube source]
     Source --> YTDLP[yt-dlp]
     Daemon --> Player[MPV player]
-    Player --> MPVSocket[/tmp/mvprxemu.sock]
+    Player --> MPVSocket["/tmp/mvprxemu.sock"]
     Daemon --> Library[Library and history]
 ```
 
