@@ -5,6 +5,7 @@ import (
 )
 
 func (d *Daemon) pause() ipc.Response {
+	var message string
 	switch d.state.Status{
 		case statePause:
 			if err := d.player.resume(); err != nil {
@@ -13,6 +14,7 @@ func (d *Daemon) pause() ipc.Response {
 					Error: err.Error(),
 				}
 			}
+			message = "▶︎ Resume"
 			d.state.Status = statePlaying
 		case statePlaying:
 			if err := d.player.pause(); err != nil {
@@ -22,6 +24,7 @@ func (d *Daemon) pause() ipc.Response {
 				}
 			}
 			d.state.Status = statePause
+			message = "❙❙ Pause"
 		default:
 			return ipc.Response{
 				OK:    false,
@@ -30,6 +33,6 @@ func (d *Daemon) pause() ipc.Response {
 	}
 	return ipc.Response{
 		OK:      true,
-		Message: string(d.state.Status),
+		Message: message,
 	}
 }
