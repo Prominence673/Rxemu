@@ -131,7 +131,36 @@ func (p *Player) resume() error {
 
 	return nil
 }
-
+func (p *Player) volSet(amount float64) error{
+	if err := p.send([]any{
+		"set_property",
+		"volume",
+		amount,
+	}); err != nil{
+		return fmt.Errorf("Unable to set volume : %w", err)
+	}
+	return nil
+}
+func (p *Player) seek(amount int) error{
+	if err := p.send([]any{
+		"seek",
+		amount,
+		"relative",
+	}); err != nil{
+		return fmt.Errorf("Unable to set volume : %w", err)
+	}
+	return nil
+}
+func (p *Player) seekAbs(amount int) error{
+	if err := p.send([]any{
+		"seek",
+		amount,
+		"absolute",
+	}); err != nil{
+		return fmt.Errorf("Unable to set volume : %w", err)
+	}
+	return nil
+}
 func (p *Player) stop() error {
 	if err := p.send([]any{"stop"}); err != nil {
 		return fmt.Errorf("stop playback: %w", err)
