@@ -26,7 +26,11 @@ var statusCmd = &cobra.Command{
 	Short: "music status",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		res := status()
-		fmt.Println(res)
+		if res.OK{
+			fmt.Println(res.Message)
+		}else{
+			fmt.Println(res.Error)
+		}
 		return nil
 	},
 }
