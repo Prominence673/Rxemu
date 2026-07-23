@@ -5,10 +5,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use: "rxemu",
+	Use:   "rxemu",
 	Short: "music player",
-	RunE: func(cmd *cobra.Command, args []string) error{
-		if err := cmd.Help(); err != nil{
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if err := cmd.Help(); err != nil {
 			return err
 		}
 		return nil
