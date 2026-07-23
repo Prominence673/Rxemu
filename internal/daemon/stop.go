@@ -1,6 +1,9 @@
 package daemon
 
-import "github.com/Prominence673/rxemu/internal/ipc"
+import (
+	"github.com/Prominence673/rxemu/internal/ipc"
+	"github.com/Prominence673/rxemu/internal/source"
+)
 
 func (d *Daemon) stop() ipc.Response {
 	if err := d.player.stop(); err != nil {
@@ -10,5 +13,6 @@ func (d *Daemon) stop() ipc.Response {
 		}
 	}
 	d.state.Status = stateStopped
-	return ipc.Response{OK: true, Message: string(d.state.Status)}
+	d.CurrentTrack = &source.Track{}
+	return ipc.Response{OK: true, Message: "■ Stopped"}
 }
