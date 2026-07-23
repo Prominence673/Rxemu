@@ -26,7 +26,11 @@ var stopCmd = &cobra.Command{
 	Short: "stop current music",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		res := stop()
-		fmt.Println(res)
+		if res.OK{
+			fmt.Println(res.Message)
+		}else{
+			fmt.Println(res.Error)
+		}
 		return nil
 	},
 }
