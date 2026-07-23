@@ -24,6 +24,7 @@ func stop() ipc.Response {
 var stopCmd = &cobra.Command{
 	Use:   "stop",
 	Short: "stop current music",
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		res := stop()
 		if res.OK{
