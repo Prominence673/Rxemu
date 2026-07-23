@@ -16,14 +16,17 @@ func main() {
 		os.Exit(1)
 	}
 	p := daemon.NewPlayer(cfg.MVPsocketPath)
-	go p.ListenEvents()
 	y := source.NewYouTube()
 
 	if err := p.Start(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-
+	go func() {
+    if err := p.ListenEvents(); err != nil {
+        fmt.Fprintln(os.Stderr, "mpv event listener:", err)
+    }
+	}()
 	defer p.Close()
 
 	d := daemon.New(p, y)
