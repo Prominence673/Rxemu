@@ -27,8 +27,8 @@ type MPVResponse struct {
 
 type MPVEvent struct{
 	Event  string  `json:"event"`
-	Reason string `json:"error"`
-	Error  any    `json:"data,omitempty"`
+	Reason string `json:"reason,omitempty"`
+    Error  string `json:"error,omitempty"`
 }
 
 func NewPlayer(socketPath string) *Player {
